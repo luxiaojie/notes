@@ -55,5 +55,32 @@ Oracle Concept 笔记
 	2. Fast Full Index Scan--is a full index scan in which the database access the data in the index itself without accessing the table, and the database read th eindex blocks in no particular order.    
 	3. Index Range Scan  
 	4. Index Unique Scan-- In contrast to an index range scan, an index unique scan must have either 0 or 1 rowid assoicated with an index key. The database performs a unique scan when a predicate references all of the columns in a UNIQUE index key using an equality operator. An index unique scan stops processing as soon as it finds the first record because no second record is poosible.   
-	5. Index Skip Scan--An index skip scan uses logical subindexes of a composite index. The database "skips" through a single index as if it were searching separate indexes. Skip scanning is beneficial if there are few distinct values in the leading column of a composite index and many distinct values in nonleading key of the index. 
+	5. Index Skip Scan--An index skip scan uses logical subindexes of a composite index. The database "skips" through a single index as if it were searching separate indexes. Skip scanning is beneficial if there are few distinct values in the leading column of a composite index and many distinct values in nonleading key of the index.  
+
+12. 分区表的存储  
+	A partitioned table is made up of one or more table partition segments. If you create a partitioned table named hash_products, then no table segment is allocated for table. Instead, the database stores data for each table partition in its own partition segment. Each table partition segment contains a portion of the table data.  
+
+	Some or all partitions of a heap-organized table can be stored in a compressed format. Compression saves space and can speed query execution. Thus, compression can be useful in environments such as data warehouses, where the amount of insert and update operations is small, and in OLTP environments.  
+
+	The attributes for table compression can be declared for a tablespace, table, or table partition. If declared at the tablespace level, then tables created in tablespace are compressed by default. You can alter compression attribute for a table, in which case the change only applies to new data going into the table. Consequently, a single table or partition may contain compressed and uncompressed blocks, which guarantees that data size will not increase because of compression. If compression could increase the size of a block, then the database does not apply it to the block.  
+
+13. 分区索引和非分区索引分类:  
+	1. Nonpartitioned Index 
+	2. Partitioned Index 
+		1. Local Partitioned Index
+			1. Local Prefixed Index
+			2. Local Nonprefixed Index
+		2. Global Partitioned Index 
+
+14. 分区中的bitmap索引  
+	1. Like other indexes, you can create a bitmap index on partitioned tables. The only restriction is that bitmpa indexes must be local to the partitioned table--they cannot be global indexes. Global bitmap indexes are supproted only on nonpartitioned tables. 
+
+15. 本地分区索引的存储  
+	Like a table partition, a local index partition is stored in tis own segment. Each segment contains a portion of the total index data. Thus, a local index made up of four partitions is not stored in a single index segment, but in four separate segments.  
+
+16. 
+
+
+
+
 
