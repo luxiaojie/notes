@@ -108,9 +108,12 @@ Oracle Concept 笔记
 	Object views are useful in prototyping or transitioning to object-oriented applications because the data in the view can be taken from relational tables and accessed as if the table were defined as an object table. You can run object-oriented applications without converting existing tables to a different physical structure.  
 
 19. 物化视图  
-	A materialized view can be partitioned. You can define a materialized view on a partitioned table adn one or more indexes on the materialized view.  
+	A materialized view can be partitioned. You can define a materialized view on a partitioned table and one or more indexes on the materialized view.  
+	物化视图如果想要快速刷新（fast refresh），则必须有 materialized view log 才能实现。  
 
+	查询重写对应用来说是透明的。如果一个查询可以通过直接访问物化视图来获得结果集而不用实时关联很多复杂的基表，那么在生成计划的时候，会使用查询重写。将对多个基表的查询转换为查询物化视图。  
 	
+
 20. 
 
 
