@@ -78,8 +78,40 @@ Oracle Concept 笔记
 15. 本地分区索引的存储  
 	Like a table partition, a local index partition is stored in tis own segment. Each segment contains a portion of the total index data. Thus, a local index made up of four partitions is not stored in a single index segment, but in four separate segments.  
 
-16. 
+16. 全局分区索引  
+	A global partitioned index is a B-tree index that is partitioned independently of the underlying table on which it is created. A single index partition can point to any or all table partitions, whereas in a locally partitioned index, a one-to-one parity exists between index partitions and table partitions.  
+	In general, global indexes are useful for OLTP applications, where rapid access, data integrity, and availability are important. In an OLTP system, a table may be partitioned by one key, for example, the employees.department_id column, but an application may need to access the data with many different keys, for example, by employee_id or job_id. Global indexes can be useful in this scenario.  
 
+17. 分区索引表特性:  
+	1. Partition columns must be a subset of primary key columns.  
+	2. Secondary indexes can be partitioned locally and globally.  
+	3. OVERFLOW data segments are always equipartitioned with the table partitions.  
+
+	Oracle Database supprots bitmap indexes on partitioned and nonpartitioned index-organized tables. A mapping table is required for creating bitmap indexes on an index-organized table.
+
+18. Object views 
+	Like relational views, object views can present only the data that you want users to see. For example, an object view could present data about IT programmers but omit sensitive data about salaries. The following example creates an employee_type object and then the view it_prog_view base on this object:  
+
+	create type employee_type as object
+	(
+		employee_id number(6),  
+		last_name 	varchar2(25),   
+		job_id		varchar2(10)
+	)  
+
+	create view it_prog_view of employee_type  
+		with object identifier(employee_id) as  
+	select e.employeeid, e.last_name, e.job_id  
+	from employees e  
+	where job_id ='IT_PROG';  
+
+	Object views are useful in prototyping or transitioning to object-oriented applications because the data in the view can be taken from relational tables and accessed as if the table were defined as an object table. You can run object-oriented applications without converting existing tables to a different physical structure.  
+
+19. 物化视图  
+	A materialized view can be partitioned. You can define a materialized view on a partitioned table adn one or more indexes on the materialized view.  
+
+	
+20. 
 
 
 
